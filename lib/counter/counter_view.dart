@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'counter_cubit.dart';
+import '../drawer.dart';
 
 /// {@template counter_view}
 /// A [StatelessWidget] which reacts to the provided
@@ -12,7 +13,17 @@ class CounterView extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('Counter')),
+      appBar: AppBar(
+        title: BlocBuilder<StringCubit, String>(
+          builder: (context, title) {
+            print('State changed $title');
+            return Text('$title');
+          },
+        ),
+      ),
+      drawer: Drawer(
+        child: DrawerCreate(),
+      ),
       body: Center(
         child: BlocBuilder<CounterCubit, int>(
           builder: (context, state) {
@@ -25,12 +36,14 @@ class CounterView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
+            heroTag: null,
             key: const Key('counterView_increment_floatingActionButton'),
             child: const Icon(Icons.add),
             onPressed: () => context.bloc<CounterCubit>().increment(),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
+            heroTag: null,
             key: const Key('counterView_decrement_floatingActionButton'),
             child: const Icon(Icons.remove),
             onPressed: () => context.bloc<CounterCubit>().decrement(),

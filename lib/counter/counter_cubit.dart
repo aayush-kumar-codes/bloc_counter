@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+//import 'package:flutter/widgets.dart';
 
 /// {@template counter_cubit}
 /// A [Cubit] which manages an [int] as its state.
@@ -12,4 +13,15 @@ class CounterCubit extends Cubit<int> {
 
   /// Subtract 1 from the current state.
   void decrement() => emit(state - 1);
+}
+
+class StringCubit extends Cubit<String> {
+  /// {@macro string_cubit}
+  ///
+  StringCubit() : super('Home Page');
+
+  void changeTitle() {
+    print('test');
+    emit('testddddddddddddddddddddddddddddddddddddddddddddd');
+  }
 }
